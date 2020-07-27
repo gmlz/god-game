@@ -3,9 +3,8 @@ var gameData = {
         current: 0,
         max: 1
     },
-    food: {
-        current: 10
-    }
+    food: 0,
+    foragers: 0
 }
   
 function createMan() {
@@ -13,7 +12,6 @@ function createMan() {
         gameData.men.current += 1;
         document.getElementById("men").innerHTML = "Men: " + gameData.men.current + "/" + gameData.men.max;
         if( gameData.men.current == 1 ) {
-            document.getElementById("food").innerHTML = "Food: 10 (-1/day)";
             document.getElementById("btn_forage").style.display = "block";
         }
     }
@@ -23,6 +21,18 @@ function createMan() {
 }
 
 function forage() {
-    gameData.food.current += 1;
-    document.getElementById("food").innerHTML = "Food: " + gameData.food.current + " (-1/day)";
+    gameData.foragers += 1;
+    document.getElementById("food").innerHTML = "Food: " + gameData.food;
+    document.getElementById("btn_forage").disabled = true;
 }
+
+function tick() {
+    if ( gameData.foragers > 0 ) {
+        gameData.food += gameData.foragers;
+        document.getElementById("food").innerHTML = "Food: " + gameData.food;
+    }
+}
+
+var mainGameLoop = window.setInterval(function() {
+    tick()
+  }, 1000)
