@@ -4,7 +4,9 @@ var gameData = {
     foragers: 0,
     forage_exp: 0,
     forage_lvl: 0,
-    forage_exp_goal: 10
+    forage_exp_goal: 10,
+    finders: 0,
+    women: 0
 }
   
 function createMan() {
@@ -13,6 +15,7 @@ function createMan() {
         document.getElementById("men").innerHTML = "Men: " + gameData.men + "/1";
         if( gameData.men == 1 ) {
             document.getElementById("btn_forage").style.display = "block";
+            document.getElementById("btn_findWoman").style.display = "block";
             gameData.food = 10;
             gameData.foragers = 0;
         }
@@ -26,6 +29,14 @@ function forage() {
     gameData.foragers += 1;
     document.getElementById("food").innerHTML = "Food: " + gameData.food;    
     document.getElementById("btn_forage").disabled = true;  
+}
+
+function findWoman() {
+    gameData.women += 1;
+    gameData.food -= 13;
+    document.getElementById("women").innerHTML = "Women: " + gameData.women;
+
+    document.getElementById("btn_findWoman").disabled = gameData.food<13;
 }
 
 function tick() {
@@ -42,6 +53,7 @@ function tick() {
         gameData.forage_lvl += 1;
         gameData.forage_exp_goal *= 2;
     }
+    document.getElementById("btn_findWoman").disabled = gameData.food<13;
 }
 
 var mainGameLoop = window.setInterval(function() {
